@@ -35,17 +35,39 @@
     <link rel="icon" href="https://iili.io/FCvz5DQ.png" type="image/png">
 
     <style>
-        /* Estilos base do corpo */
+        /* Estrutura base para garantir que o fundo animado seja sempre visível */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a; /* Cor de fundo de segurança */
+        }
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #0a0a0a; /* Fundo escuro */
-            color: #f0f0f0; /* Cor do texto principal */
-            margin: 0;
+            color: #f0f0f0;
         }
 
         /* Cor principal da marca */
         :root {
             --cor-principal: #E711F0;
+        }
+        
+        /* Contêiner da Animação de Fundo */
+        #particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Camada base */
+        }
+        
+        /* Contêiner de todo o conteúdo, fica sobre a animação */
+        #content-wrapper {
+            position: relative;
+            z-index: 1; /* Camada do conteúdo, acima da base */
+            width: 100%;
         }
 
         /* Animação para o conteúdo principal */
@@ -55,16 +77,6 @@
         }
         .animated-content {
             animation: fadeInScale 1s ease-out forwards;
-        }
-
-        /* Fundo de partículas animado */
-        #tsparticles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
         }
 
         /* Estilo para o temporizador */
@@ -104,99 +116,124 @@
 </head>
 <body>
 
-    <!-- Fundo de Partículas -->
-    <div id="tsparticles"></div>
+    <!-- CAMADA 0: Fundo animado -->
+    <div id="particles-container"></div>
 
-    <!-- Conteúdo Principal -->
-    <main>
-        <!-- Seção Hero (Em Breve) - Ocupa a tela inteira -->
-        <section class="h-screen flex flex-col justify-center items-center text-center px-4">
-            <div class="animated-content flex flex-col items-center">
-                <img src="https://iili.io/FCvz5DQ.png" alt="Logo Savana Eventos" class="h-24 md:h-32 lg:h-40 mx-auto mb-8">
+    <!-- CAMADA 1: Todo o conteúdo visível do site -->
+    <div id="content-wrapper">
+        <main>
+            <!-- Seção Hero (Em Breve) - Ocupa a tela inteira -->
+            <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+                <div class="animated-content flex flex-col items-center">
+                    <img src="https://iili.io/FCvz5DQ.png" alt="Logo Savana Eventos" class="h-24 md:h-32 lg:h-40 mx-auto mb-8">
+                    
+                    <h1 class="text-6xl md:text-8xl lg:text-9xl font-black uppercase" style="color: var(--cor-principal); text-shadow: 0 0 20px rgba(231, 17, 240, 0.6);">
+                        EM BREVE
+                    </h1>
+                    <p class="text-4xl md:text-5xl font-semibold text-white mt-4 mb-8">
+                        AGOSTO 2025
+                    </p>
+                    <p id="countdown-message" class="text-base md:text-lg text-gray-300 font-normal mt-8 mb-4">
+                        Prepare-se! As vendas começam em:
+                    </p>
+                    <div id="countdown" class="flex justify-center items-center">
+                        <div class="countdown-item"><span id="days" class="countdown-value">00</span><span class="countdown-label">Dias</span></div>
+                        <div class="countdown-item"><span id="hours" class="countdown-value">00</span><span class="countdown-label">Horas</span></div>
+                        <div class="countdown-item"><span id="minutes" class="countdown-value">00</span><span class="countdown-label">Minutos</span></div>
+                        <div class="countdown-item"><span id="seconds" class="countdown-value">00</span><span class="countdown-label">Segundos</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Espaço Vazio para Rolagem -->
+            <section class="h-[50vh]"></section>
+        </main>
+
+        <!-- Rodapé Aprimorado -->
+        <footer class="bg-black/50 backdrop-blur-sm border-t border-white/10">
+            <div class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+                <img src="https://iili.io/FCvz5DQ.png" alt="Logo Savana Eventos no Rodapé" class="h-16 mx-auto mb-6">
                 
-                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black uppercase" style="color: var(--cor-principal); text-shadow: 0 0 20px rgba(231, 17, 240, 0.6);">
-                    EM BREVE
-                </h1>
-                <p class="text-4xl md:text-5xl font-semibold text-white mt-4 mb-8">
-                    AGOSTO 2025
-                </p>
-                <p id="countdown-message" class="text-base md:text-lg text-gray-300 font-normal mt-8 mb-4">
-                    Prepare-se! As vendas começam em:
-                </p>
-                <div id="countdown" class="flex justify-center items-center">
-                    <div class="countdown-item"><span id="days" class="countdown-value">00</span><span class="countdown-label">Dias</span></div>
-                    <div class="countdown-item"><span id="hours" class="countdown-value">00</span><span class="countdown-label">Horas</span></div>
-                    <div class="countdown-item"><span id="minutes" class="countdown-value">00</span><span class="countdown-label">Minutos</span></div>
-                    <div class="countdown-item"><span id="seconds" class="countdown-value">00</span><span class="countdown-label">Segundos</span></div>
+                <div class="flex justify-center items-center space-x-6 sm:space-x-8 mb-8">
+                    <a href="https://instagram.com/savanalavras" target="_blank" rel="noopener noreferrer" class="group flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-6 w-6 group-hover:opacity-80 transition-opacity">
+                         <span>Instagram</span>
+                    </a>
+                    <a href="https://wa.me/5511974488748" target="_blank" rel="noopener noreferrer" class="group flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp" class="h-6 w-6 group-hover:opacity-80 transition-opacity">
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+
+                <hr class="w-48 h-px mx-auto border-0 bg-gray-700 mb-8">
+
+                <div class="text-center text-sm text-gray-500">
+                    <p>&copy; 2025 Savana Eventos. Todos os direitos reservados.</p>
+                    <p class="mt-1">CNPJ: 61.477.242/0001-65</p>
                 </div>
             </div>
-        </section>
-
-        <!-- Espaço Vazio para Rolagem -->
-        <section class="h-[50vh]"></section>
-
-    </main>
-
-    <!-- Rodapé Aprimorado -->
-    <footer class="bg-gray-900/80 backdrop-blur-sm border-t border-gray-800/50">
-        <div class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
-            <img src="https://iili.io/FCvz5DQ.png" alt="Logo Savana Eventos no Rodapé" class="h-16 mx-auto mb-6">
-            
-            <div class="flex justify-center items-center space-x-6 sm:space-x-8 mb-8">
-                <a href="https://instagram.com/savanalavras" target="_blank" rel="noopener noreferrer" class="group flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300">
-                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-6 w-6 group-hover:opacity-80 transition-opacity">
-                     <span>Instagram</span>
-                </a>
-                <a href="https://wa.me/5511974488748" target="_blank" rel="noopener noreferrer" class="group flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp" class="h-6 w-6 group-hover:opacity-80 transition-opacity">
-                    <span>WhatsApp</span>
-                </a>
-            </div>
-
-            <hr class="w-48 h-px mx-auto border-0 bg-gray-700 mb-8">
-
-            <div class="text-center text-sm text-gray-500">
-                <p>&copy; 2025 Savana Eventos. Todos os direitos reservados.</p>
-                <p class="mt-1">CNPJ: 61.477.242/0001-65</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <!-- Scripts JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializa as partículas animadas
-            tsParticles.load("tsparticles", {
-                fpsLimit: 60,
-                particles: {
-                    number: { value: 40, density: { enable: true, value_area: 800 }},
-                    color: { value: "#E711F0" },
-                    shape: { type: "circle" },
-                    opacity: {
-                        value: 0.4,
-                        random: true,
-                        anim: { enable: true, speed: 0.5, opacity_min: 0.05, sync: false }
+            // Inicializa as partículas animadas no contêiner correto
+            tsParticles.load({
+                id: "particles-container", // Alvo é o contêiner de fundo
+                options: {
+                    background: {
+                        color: {
+                            value: 'transparent', // O fundo do canvas é transparente para mostrar o fundo do body
+                        },
                     },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true, distance: 150, color: "#E711F0", opacity: 0.2, width: 1
+                    fpsLimit: 60,
+                    particles: {
+                        // AJUSTE: Aumentado o número de partículas e a densidade
+                        number: { value: 80, density: { enable: true, value_area: 600 } },
+                        color: { value: "#E711F0" },
+                        shape: { type: "circle" },
+                        opacity: {
+                            value: 0.4,
+                            random: true,
+                            anim: { enable: true, speed: 0.5, opacity_min: 0.05, sync: false }
+                        },
+                        size: { value: 3, random: true },
+                        links: {
+                            enable: true,
+                            distance: 150,
+                            color: "#E711F0",
+                            opacity: 0.2,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 1,
+                            direction: "none",
+                            random: true,
+                            straight: false,
+                            out_mode: "out",
+                        }
                     },
-                    move: {
-                        enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out",
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: { onhover: { enable: true, mode: "grab" }, resize: true },
-                    modes: { grab: { distance: 140, line_opacity: 0.5 } }
-                },
-                retina_detect: true,
+                    interactivity: {
+                        detect_on: "window",
+                        events: { onhover: { enable: true, mode: "grab" }, resize: true },
+                        modes: {
+                            grab: {
+                                distance: 140,
+                                links: {
+                                    opacity: 0.5
+                                }
+                            }
+                        }
+                    },
+                    retina_detect: true,
+                }
             });
 
             // --- Lógica do Temporizador ---
-            // Data alvo ajustada para 1º de Agosto de 2025
             const countdownDate = new Date("August 1, 2025 00:00:00").getTime();
             const updateCountdown = () => {
                 const now = new Date().getTime();
